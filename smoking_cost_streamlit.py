@@ -15,7 +15,8 @@ import time
 
 def login():
     entered = st.session_state.get("passcode_input", "")
-    if entered == st.secrets("PASSCODE"):
+    passcode = st.secrets("PASSCODE")
+    if entered == passcode:
         st.session_state.authenticated = True
         success = st.success("✅ Login successful!")
         time.sleep(0.5)
