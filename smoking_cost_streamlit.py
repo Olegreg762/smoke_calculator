@@ -15,8 +15,8 @@ import time
 
 def login():
     entered = st.session_state.get("passcode_input", "")
-    passcode = st.secrets("PASSCODE")
-    if entered == passcode:
+    
+    if entered == st.secrets["PASSCODE"]:
         st.session_state.authenticated = True
         success = st.success("✅ Login successful!")
         time.sleep(0.5)
@@ -80,9 +80,9 @@ def smoking_cost(
     }
 
 def email_csv(df: pd.DataFrame):
-    sender_email = st.secrets("SENDEMAIL")
-    sender_password = st.secrets("PASS")
-    recipient_email = st.secrets("RECEIVEEMAIL")
+    sender_email = st.secrets["SENDEMAIL"]
+    sender_password = st.secrets["PASS"]
+    recipient_email = st.secrets["RECEIVEEMAIL"]
 
     if not sender_email or not sender_password or not recipient_email:
         st.error("⚠️ Missing Gmail credentials or recipient in .env file.")
