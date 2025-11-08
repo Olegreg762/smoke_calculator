@@ -125,12 +125,15 @@ if not st.session_state.authenticated:
         on_change=login,
         placeholder="Enter your passcode",
     )
-    st.button("Login", use_container_width=True, on_click=login)
+    st.button("Login", width="content", on_click=login)
     st.markdown("<br><p style='text-align:center;color:gray;'>Secure access to your smoker cost tool</p>", unsafe_allow_html=True)
 
 else:
-    st.markdown("<h2 style='text-align:center;'>🔥 Pellet Smoker Cost & Retail Calculator</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align:center;'>Pellet Smoker Cost & Retail Calculator</h2>", unsafe_allow_html=True)
     st.divider()
+
+    if "log" not in st.session_state:
+        st.session_state.log = []
 
     with st.expander("Pellet Info", expanded=True):
         pellet_bag_cost = st.number_input("Pellet Bag Cost ($)", 0.0, 100.0, 20.0)
@@ -148,15 +151,26 @@ else:
         misc_cost = st.number_input("Misc. Cost ($)", 0.0, 50.0, 2.0)
         markup_multiplier = st.number_input("Markup Multiplier", 1.0, 10.0, 2.0, step=0.1)
 
-    if st.button("📧 Calculate & Email Report", use_container_width=True):
-        result = smoking_cost(
+    add_meat = st.button("➕ Add Meat to Log", width="content")
+
+    if add_meat:
+        entry = smoking_cost(
             meat_type, raw_meat_weight_lbs, meat_price_per_lb, serving_size_lbs,
             smoking_hours, pellet_bag_cost, pellet_bag_weight, pellet_usage_per_hour_lb,
             seasoning_cost, misc_cost, markup_multiplier, tax_rate
         )
-        df = pd.DataFrame([result])
-        st.dataframe(df, use_container_width=True)
-        email_csv(df)
+        st.session_state.log.append(entry)
+        st.success(f"Added {meat_type.title()} to log.")
+
+    if st.session_state.log:
+        st.markdown("### Smoking Log")
+        log_df = pd.DataFrame(st.session_state.log)
+        st.dataframe(log_df, width="content")
+
+        if st.button("📧 Calculate & Email Report", width="content"):
+            df = pd.DataFrame(log_df)
+            st.dataframe(df, width="content")
+            email_csv(log_df)
 
     st.divider()
-    st.button("Logout", use_container_width=True, on_click=lambda: st.session_state.update({"authenticated": False}))
+    st.button("Logout", width="content", on_click=lambda: st.session_state.update({"authenticated": False}))
