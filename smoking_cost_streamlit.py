@@ -136,20 +136,20 @@ else:
         st.session_state.log = []
 
     with st.expander("Pellet Info", expanded=True):
-        pellet_bag_cost = st.number_input("Pellet Bag Cost ($)", 0.0, 100.0, 20.0)
-        pellet_bag_weight = st.number_input("Pellet Bag Weight (lbs)", 1.0, 100.0, 40.0)
-        pellet_usage_per_hour_lb = st.number_input("Pellet Usage per Hour (lbs/hour)", 0.1, 5.0, 0.6)
-        tax_rate = st.number_input("Sales Tax Rate (%)", 0.0, 25.0, 11.0)
+        pellet_bag_cost = st.number_input("Pellet Bag Cost ($)", min_value=1.0, value=20.0, step=0.5)
+        pellet_bag_weight = st.number_input("Pellet Bag Weight (lbs)", min_value=1.0, value=40.0, step=1.0)
+        pellet_usage_per_hour_lb = st.number_input("Pellet Usage per Hour (lbs/hour)", min_value=0.1, value=1.5, step=0.5)
+        tax_rate = st.number_input("Sales Tax Rate (%)", min_value=0.0, value=11.0)
 
     with st.expander("Meat Details", expanded=True):
         meat_type = st.selectbox("Select Meat Type", ["Brisket", "Pork Butt", "Ribs", "Chicken", "Turkey", "Tri-tip", "Other"])
-        raw_meat_weight_lbs = st.number_input("Raw Meat Weight (lbs)", 0.1, 200.0, 10.0)
-        meat_price_per_lb = st.number_input("Meat Price per lb ($)", 0.0, 50.0, 3.5)
-        serving_size_lbs = st.number_input("Serving Size per Person (lbs)", 0.1, 2.0, 0.5)
-        smoking_hours = st.number_input("Smoking Time (hours)", 1.0, 48.0, 8.0)
-        seasoning_cost = st.number_input("Seasoning Cost ($)", 0.0, 50.0, 5.0)
-        misc_cost = st.number_input("Misc. Cost ($)", 0.0, 50.0, 2.0)
-        markup_multiplier = st.number_input("Markup Multiplier", 1.0, 10.0, 2.0, step=0.1)
+        raw_meat_weight_lbs = st.number_input("Raw Meat Weight (lbs)", min_value=0.1, value=10.0, step=0.5)
+        meat_price_per_lb = st.number_input("Meat Price per lb ($)", min_value=1.0, value=3.5, step=0.5)
+        serving_size_lbs = st.number_input("Serving Size per Person (lbs)", min_value=0.1, value=0.5, step=0.25)
+        smoking_hours = st.number_input("Smoking Time (hours)", min_value=1.0, value=8.0, step=0.5)
+        seasoning_cost = st.number_input("Seasoning Cost ($)", min_value=1.0, value=5.0, step=1.0)
+        misc_cost = st.number_input("Misc. Cost ($)", min_value=0.0,  value=2.0, step=1)
+        markup_multiplier = st.number_input("Markup Multiplier", min_value=1.0, value=2.0, step=0.5)
 
     add_meat = st.button("➕ Add Meat to Log", width="content")
 
