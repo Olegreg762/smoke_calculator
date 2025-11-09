@@ -148,7 +148,7 @@ else:
         serving_size_lbs = st.number_input("Serving Size per Person (lbs)", min_value=0.1, value=0.5, step=0.25)
         smoking_hours = st.number_input("Smoking Time (hours)", min_value=1.0, value=8.0, step=0.5)
         seasoning_cost = st.number_input("Seasoning Cost ($)", min_value=1.0, value=5.0, step=1.0)
-        misc_cost = st.number_input("Misc. Cost ($)", min_value=0.0,  value=2.0, step=1)
+        misc_cost = st.number_input("Misc. Cost ($)", min_value=0.0,  value=2.0, step=1.0)
         markup_multiplier = st.number_input("Markup Multiplier", min_value=1.0, value=2.0, step=0.5)
 
     add_meat = st.button("➕ Add Meat to Log", width="content")
