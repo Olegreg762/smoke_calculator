@@ -73,6 +73,7 @@ def smoking_cost(
         "Pellet Cost ($)": round(pellet_cost, 2),
         "Total Cost ($)": round(total_cost, 2),
         "Cost/Serving ($)": round(cost_per_serving, 2),
+        "Full Meat Menu Price": round(menu_price * servings, 2),
         "Menu Price/Serving ($)": menu_price,
         "Tax Rate (%)": tax_rate,
         "Tax Portion/Serving ($)": true_tax_portion,
@@ -148,10 +149,10 @@ else:
         serving_size_lbs = st.number_input("Serving Size per Person (lbs)", min_value=0.1, value=0.5, step=0.25)
         smoking_hours = st.number_input("Smoking Time (hours)", min_value=1.0, value=8.0, step=0.5)
         seasoning_cost = st.number_input("Seasoning Cost ($)", min_value=1.0, value=5.0, step=1.0)
-        misc_cost = st.number_input("Misc. Cost ($)", min_value=0.0,  value=2.0, step=1)
+        misc_cost = st.number_input("Misc. Cost ($)", min_value=0.0,  value=2.0, step=.50)
         markup_multiplier = st.number_input("Markup Multiplier", min_value=1.0, value=2.0, step=0.5)
 
-    add_meat = st.button("➕ Add Meat to Log", width="content")
+    add_meat = st.button("➕ Add to Log", width="content")
 
     if add_meat:
         entry = smoking_cost(
@@ -167,7 +168,7 @@ else:
         log_df = pd.DataFrame(st.session_state.log)
         st.dataframe(log_df, width="content")
 
-        if st.button("📧 Calculate & Email Report", width="content"):
+        if st.button("📧 Email Report", width="content"):
             df = pd.DataFrame(log_df)
             st.dataframe(df, width="content")
             email_csv(log_df)
