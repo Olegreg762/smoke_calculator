@@ -154,6 +154,23 @@ else:
 
     add_meat = st.button("➕ Add to Log", width="content")
 
+    remove_last = st.button("➖ Remove Last Entry", width="content")
+
+    clear_log = st.button("🗑️ Clear Log", width="content")
+    if clear_log:
+        if st.session_state.log == []:
+            st.info("Log is already empty.")
+        else:
+            st.session_state.log = []
+            st.info("Cleared the entire log.")
+
+    if remove_last:
+        if st.session_state.log == []:
+            st.info("Log is empty, nothing to remove.")
+        else:
+            st.session_state.log.pop()
+            st.info("Removed last entry from log.")
+
     if add_meat:
         entry = smoking_cost(
             meat_type, raw_meat_weight_lbs, meat_price_per_lb, serving_size_lbs,
@@ -167,6 +184,7 @@ else:
         st.markdown("### Smoking Log")
         log_df = pd.DataFrame(st.session_state.log)
         st.dataframe(log_df, width="content")
+        
 
         if st.button("📧 Email Report", width="content"):
             df = pd.DataFrame(log_df)
